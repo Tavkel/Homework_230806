@@ -1,5 +1,6 @@
 package com.example.Homework_230806.controllers;
 
+import com.example.Homework_230806.models.Cart;
 import com.example.Homework_230806.services.interfaces.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +20,20 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    //Отдается мапа ввиду проблемы описанной в обсуждениях домашки
     @GetMapping("/get")
     public ResponseEntity<Map<Integer,Integer>> getCart(){
-        var result = cartService.getCart().getContents();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(cartService.getCartContents(), HttpStatus.OK);
     }
 
-    //Отдается мапа ввиду проблемы описанной в обсуждениях домашки
+    @GetMapping("/cart")
+    public ResponseEntity<Cart> brokenJsonEndpoint(){
+        return new ResponseEntity<>(cartService.getCart(), HttpStatus.OK);
+    }
+
     @GetMapping("/add")
     public ResponseEntity<Map<Integer,Integer>> addProduct(@RequestParam int... ids){
         cartService.addProductToCart(ids);
-        var result = cartService.getCart().getContents();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(cartService.getCartContents(), HttpStatus.OK);
     }
 
 }

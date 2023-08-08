@@ -11,17 +11,17 @@ import java.util.Map;
 @SessionScope
 public class Cart {
     private Map<Integer, Integer> contents = new HashMap<>();
-    public Cart() {
-    }
-
-    @Bean
-    @SessionScope
-    public Cart sessionCart(){
-        return new Cart();
-    }
 
     public Map<Integer, Integer> getContents() {
         return contents;
+    }
+
+    public void addItem(int id){
+        if (contents.containsKey(id)){
+            contents.put(id, contents.get(id) + 1);
+        } else{
+            contents.put(id, 1);
+        }
     }
 
     @Override
